@@ -5,6 +5,6 @@
 #ifndef UNTITLED_SRC_TARGET_INCLUDE_MAIN_H_
 #define UNTITLED_SRC_TARGET_INCLUDE_MAIN_H_
 
-#include "MqttClient.h"
+#include "MQTTClient.h"
 
 #endif //UNTITLED_SRC_TARGET_INCLUDE_MAIN_H_

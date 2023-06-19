@@ -11,26 +11,19 @@
 # ssh credentials (test user):
 #   user@password
 
-FROM ubuntu:20.04
-
-RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get -y install tzdata
+FROM ubuntu:22.04
 
 RUN apt-get update \
   && apt-get install -y ssh \
-      build-essential \
-      gcc \
-      g++ \
-      gdb \
-      clang \
-      make \
-      ninja-build \
-      cmake \
-      autoconf \
-      automake \
-      locales-all \
-      dos2unix \
-      rsync \
-      tar \
+    build-essential \
+    gcc \
+    g++ \
+    gdb \
+    clang \
+    cmake \
+    rsync \
+    tar \
+    libssl-dev \
   && apt-get clean
 
 RUN ( \
@@ -45,5 +38,7 @@ RUN useradd -m user \
   && yes password | passwd user
 
 RUN usermod -s /bin/bash user
+
+RUN bash
 
 CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]

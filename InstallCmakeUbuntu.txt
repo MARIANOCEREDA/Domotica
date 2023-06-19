@@ -1,0 +1,23 @@
+
+Run commands:
+
+#Remove previous version
+apt remove cmake
+
+# Download cmake
+curl -O https://cmake.org/files/v3.25/cmake-3.25.0.tar.gz
+
+# Unzip
+tar xvzf cmake-3.26.3.tar.gz
+
+# go to folder
+cd cmake-3.26.3
+
+# Run configure
+./configure
+
+# build with make
+make
+
+# install
+make install
