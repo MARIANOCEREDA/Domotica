@@ -4,18 +4,16 @@ int main(int argc, char* argv[]) {
 
   mqtt::async_client client(MqttClient::SERVER_ADDRESS, MqttClient::CLIENT_ID);
 
-  auto ssl_options= mqtt::ssl_options_builder()
-      .trust_store(MqttClient::KEY_STORE)
-      .error_handler([](const std::string& msg) {
-        std::cerr << "SSL Error: " << msg << std::endl;
-      })
-      .finalize();
+  const char* PAYLOAD1 = "Hello World!";
 
-  mqtt::connect_options connect_options;
-  connect_options.set_user_name(MqttClient::MQTT_USERNAME);
-  connect_options.set_password(MqttClient::MQTT_PASSWORD);
-  //connect_options.set_ssl(ssl_options);
-  connect_options.set_clean_session(false);
+  auto connection_builder = mqtt::connect_options_builder();
+
+  mqtt::connect_options connect_options = connection_builder
+      .user_name(MqttClient::MQTT_USERNAME)
+      .password(MqttClient::MQTT_PASSWORD)
+     .keep_alive_interval(std::chrono::seconds(45))
+     .clean_session(false)
+     .finalize();
 
   // Install the callback(s) before connecting.
   MqttClient::Callback mqtt_callback(client, connect_options);
@@ -23,12 +21,21 @@ int main(int argc, char* argv[]) {
 
   try {
     LOG(INFO) << "Connecting to the MQTT server..." << std::flush;
-    client.connect(connect_options, nullptr, mqtt_callback);
+    client.connect(connect_options, nullptr, mqtt_callback)->wait();
   }
   catch (const mqtt::exception& exc) {
-    LOG(ERROR) << "\nERROR: Unable to connect to MQTT server: '"
+    LOG(ERROR) << "\n Unable to connect to MQTT server: '"
               << MqttClient::SERVER_ADDRESS << "'" << exc << std::endl;
     return 1;
+  }
+
+  try{
+    LOG(INFO) << "\nSending message..." << std::endl;
+    auto pubmsg = mqtt::make_message(MqttClient::TOPIC, PAYLOAD1, MqttClient::QOS, false);
+    client.publish(pubmsg)->wait_for(std::chrono::seconds(10));
+    LOG(INFO) << "  ...OK" << std::endl;
+  }catch(const mqtt::exception& exc){
+    LOG(ERROR) << "\n Unable to publish message due to error: "<< exc << std::endl;
   }
 
   while (std::tolower(std::cin.get()) != 'q');

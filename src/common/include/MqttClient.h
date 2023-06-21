@@ -39,7 +39,8 @@ namespace MqttClient {
    void connected(const std::string& cause) override;
    void connection_lost(const std::string& cause) override;
    void message_arrived(mqtt::const_message_ptr msg) override;
-   void delivery_complete(mqtt::delivery_token_ptr token) override {};
+   void delivery_complete(mqtt::delivery_token_ptr token) override;
+   void subscribe_to_topic(const std::string topic, const int qos);
 
   public:
    Callback(mqtt::async_client& cli, mqtt::connect_options& connect_options)
