@@ -5,6 +5,11 @@
 #ifndef UNTITLED_SRC_TARGET_INCLUDE_MAIN_H_
 #define UNTITLED_SRC_TARGET_INCLUDE_MAIN_H_
 
-#include "MQTTClient.h"
+#include "MqttClient.h"
+#include "MqttData.h"
+#include "easylogging++.h"
+
+// Initialize logger
+INITIALIZE_EASYLOGGINGPP
 
 #endif //UNTITLED_SRC_TARGET_INCLUDE_MAIN_H_
