@@ -42,11 +42,15 @@ void Callback::on_failure(const mqtt::token &tok) {
 
 void Callback::connected(const std::string &cause) {
   LOG(INFO) << __PRETTY_FUNCTION__  << " Connection success" << std::endl;
+  this->subscribe_to_topic(TOPIC, QOS);
 }
 
 void Callback::subscribe_to_topic(const std::string topic, const int qos){
   m_cli.subscribe(topic, qos, nullptr, m_sub_listener);
-  LOG(INFO) << __PRETTY_FUNCTION__  << " Subscribing to topic '" << topic << " for client " << CLIENT_ID << "and QoS" << qos << std::endl;
+  LOG(INFO) << __PRETTY_FUNCTION__
+    << " Subscribing to topic: " << topic
+    << " - Client: " << CLIENT_ID
+    << " - QoS: " << qos << std::endl;
 }
 
 void Callback::connection_lost(const std::string &cause) {

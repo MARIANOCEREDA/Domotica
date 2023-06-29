@@ -49,6 +49,11 @@ namespace MqttClient {
 
  };
 
+ class MqttClient : public mqtt::async_client{
+
+
+
+ };
 
 } // MqttClient
 

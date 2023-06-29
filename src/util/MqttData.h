@@ -9,11 +9,11 @@
 
 namespace MqttClient{
 
-const std::string SERVER_ADDRESS("ws://172.17.0.3:8083");
+const std::string SERVER_ADDRESS("ws://20.118.166.152:8083");
 const std::string CLIENT_ID("cpp-test");
 const std::string TOPIC("emqx/cpp-test");
 const std::string MQTT_USERNAME("admin");
-const std::string MQTT_PASSWORD("GER17399m@n");
+const std::string MQTT_PASSWORD("public");
 const std::string KEY_STORE { "src/certificates/emqx-ca.crt" };
 const int QOS = 1;
 const int N_RETRY_ATTEMPTS = 5;

@@ -6,14 +6,11 @@ set(CMAKE_CXX_STANDARD 17)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
-#set(PAHO_MQTT_LIBRARY_PATH /home/mariano/workspace/projects/domotica/libs/paho.mqtt.cpp)
-#set(PAHO_MQTT_C_LIBRARY_PATH /home/mariano/workspace/projects/domotica/libs/paho.mqtt.c)
-
 find_package(OpenSSL REQUIRED)
 
 # Find mqtt libraries
-find_library(MQTT_LIB libpaho-mqttpp3.so REQUIRED)
-find_library(MQTT_LIB_C libpaho-mqtt3c.so REQUIRED)
+find_library(MQTT_LIB libpaho-mqttpp3a REQUIRED)
+find_library(MQTT_LIB_C libpaho-mqtt3c REQUIRED)
 
 if (MQTT_LIB)
     message("Found Paho-mqtt-cpp client library")
@@ -28,17 +25,9 @@ else ()
 endif (MQTT_LIB_C)
 
 # Pigpiod library
-find_library(pigpio_LIBRARY
-        NAMES libpigpio.so
-        HINTS /usr/local/lib)
-
-find_library(pigpiod_if_LIBRARY
-        NAMES libpigpiod_if.so
-        HINTS /usr/local/lib)
-
-find_library(pigpiod_if2_LIBRARY
-        NAMES libpigpiod_if2.so
-        HINTS /usr/local/lib)
+find_library(pigpio_LIBRARY NAMES libpigpio.so HINTS /usr/local/lib REQUIRED)
+find_library(pigpiod_if_LIBRARY NAMES libpigpiod_if.so HINTS /usr/local/lib REQUIRED)
+find_library(pigpiod_if2_LIBRARY NAMES libpigpiod_if2.so HINTS /usr/local/lib REQUIRED)
 
 # Set the pigpio variables to plural form to make them accessible for
 # the paramount cmake modules.
@@ -59,10 +48,12 @@ include_directories(
 set(HEADER_FILES
         src/target/include/main.h
         src/common/include/MqttClient.h
-        src/util/MqttData.h)
+        src/util/MqttData.h
+        src/common/include/FilesystemManager.h)
 
 set(SOURCE_FILES
-        src/common/MqttClient.cpp)
+        src/common/MqttClient.cpp
+        src/common/FilesystemManager.cpp)
 
 add_executable(Domotica src/target/main.cpp ${HEADER_FILES} ${SOURCE_FILES})
 
