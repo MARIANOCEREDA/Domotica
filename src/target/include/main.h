@@ -9,6 +9,7 @@
 #include "MqttData.h"
 #include "chrono"
 #include "easylogging++.h"
+#include "pigpio.h"
 
 // Initialize logger
 INITIALIZE_EASYLOGGINGPP

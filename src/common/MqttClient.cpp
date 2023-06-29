@@ -20,6 +20,8 @@ void ActionListener::on_success(const mqtt::token &tok) {
     std::cout << " token topic: '" << (*top)[0] << "', ..." << std::endl;
 }
 
+
+// Callback class
 void Callback::reconnect() {
   std::this_thread::sleep_for(std::chrono::milliseconds(2500));
   try {

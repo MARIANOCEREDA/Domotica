@@ -27,6 +27,7 @@ namespace MqttClient {
 };
 
  class Callback : public virtual mqtt::callback, public virtual mqtt::iaction_listener{
+
   private:
    int m_conn_retry;
    mqtt::async_client& m_cli;
@@ -43,10 +44,11 @@ namespace MqttClient {
    void subscribe_to_topic(const std::string topic, const int qos);
 
   public:
-   Callback(mqtt::async_client& cli, mqtt::connect_options& connect_options)
-   : m_conn_retry(0), m_cli(cli), m_conn_options(connect_options), m_sub_listener("Subscription") {}
+   Callback(mqtt::async_client& cli, mqtt::connect_options& connect_options, int retry)
+   : m_cli(cli), m_conn_options(connect_options), m_sub_listener("Subscription"), m_conn_retry(retry){};
 
  };
+
 
 } // MqttClient
 
