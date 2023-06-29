@@ -8,17 +8,19 @@
 #include "iostream"
 #include "fstream"
 #include "FilesystemData.h"
+#include "chrono"
 
 namespace FilesystemManager {
 
 class FilesystemManager {
 
+  std::string m_name;
+
  public:
-  FilesystemManager(){};
+  FilesystemManager(std::string name) : m_name(name){};
   ~FilesystemManager(){};
 
   bool create_file(const std::string& content, const std::string& file_name);
-
 
 };
 

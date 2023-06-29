@@ -2,7 +2,7 @@
 
 int main(int argc, char* argv[]) {
 
-  const char* PAYLOAD1 = "{ msg : Hello, from Raspberrypi}";
+  const char* PAYLOAD1 = "{ msg : Hello, from Raspberrypi} ";
 
   mqtt::async_client mqtt_client(MqttClient::SERVER_ADDRESS, MqttClient::CLIENT_ID);
   auto connection_builder = mqtt::connect_options_builder();

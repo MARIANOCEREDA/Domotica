@@ -8,7 +8,13 @@ namespace FilesystemManager {
 
 bool FilesystemManager::FilesystemManager::create_file(const std::string& content, const std::string& file_name) {
 
-  const std::string complete_file_path = TOPICS_DATA_PATH + "/" + file_name;
+  auto currentTime = std::chrono::system_clock::now();
+
+  std::time_t current_time_t = std::chrono::system_clock::to_time_t(currentTime);
+
+  std::string timestamp = std::ctime(&current_time_t);
+
+  const std::string complete_file_path = TOPICS_DATA_PATH + "/" + file_name + "/" + timestamp +".json";
 
   std::ofstream file(complete_file_path);
   if (!file.is_open()) {

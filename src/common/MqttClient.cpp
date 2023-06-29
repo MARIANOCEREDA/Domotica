@@ -66,6 +66,9 @@ void Callback::connection_lost(const std::string &cause) {
 void Callback::message_arrived(mqtt::const_message_ptr msg) {
   LOG(INFO) << __PRETTY_FUNCTION__  << " Message arrived from topic: " << msg->get_topic() << std::endl;
   LOG(INFO) << __PRETTY_FUNCTION__  << " Payload: '" << msg->to_string() << "'\n" << std::endl;
+
+  // Create a file when a message arrives
+  m_filesystem_manager.create_file(msg->to_string(), msg->get_topic());
 }
 
 void Callback::delivery_complete(mqtt::delivery_token_ptr tok){

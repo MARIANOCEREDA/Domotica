@@ -9,6 +9,7 @@
 #include "easylogging++.h"
 #include "MqttData.h"
 #include "mqtt/async_client.h"
+#include "FilesystemManager.h"
 
 namespace MqttClient {
 
@@ -33,6 +34,8 @@ namespace MqttClient {
    mqtt::async_client& m_cli;
    mqtt::connect_options& m_conn_options;
    ActionListener m_sub_listener;
+   FilesystemManager::FilesystemManager m_filesystem_manager;
+
 
    void reconnect();
    void on_failure(const mqtt::token& tok) override;
@@ -45,7 +48,8 @@ namespace MqttClient {
 
   public:
    Callback(mqtt::async_client& cli, mqtt::connect_options& connect_options, int retry)
-   : m_cli(cli), m_conn_options(connect_options), m_sub_listener("Subscription"), m_conn_retry(retry){};
+   : m_cli(cli), m_conn_options(connect_options), m_sub_listener("Subscription"), m_conn_retry(retry),
+     m_filesystem_manager("FsManager"){};
 
  };
 
